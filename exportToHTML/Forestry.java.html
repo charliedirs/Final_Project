@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Forestry.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Forestry.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Scanner</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">Forestry </span><span class="s2">{</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">Forest myForest</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">argIndex</span><span class="s2">;</span>
+        <span class="s0">boolean </span><span class="s1">doNext</span><span class="s2">;</span>
+        <span class="s1">File testFile</span><span class="s2">;</span>
+<span class="s3">//----Welcome message</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Welcome to the Forestry Simulation&quot;</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;----------------------------------&quot;</span><span class="s2">);</span>
+        <span class="s1">doNext </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">argIndex </span><span class="s2">= </span><span class="s5">0</span><span class="s2">; </span><span class="s1">doNext </span><span class="s2">&amp;&amp; </span><span class="s1">argIndex </span><span class="s2">&lt; </span><span class="s1">args</span><span class="s2">.</span><span class="s1">length</span><span class="s2">; </span><span class="s1">argIndex</span><span class="s2">++) {</span>
+            <span class="s1">doNext </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Initializing from &quot; </span><span class="s2">+ </span><span class="s1">args</span><span class="s2">[</span><span class="s1">argIndex</span><span class="s2">]);</span>
+
+            <span class="s1">testFile </span><span class="s2">= </span><span class="s0">new </span><span class="s1">File</span><span class="s2">(</span><span class="s1">args</span><span class="s2">[</span><span class="s1">argIndex</span><span class="s2">] + </span><span class="s4">&quot;.csv&quot;</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">testFile</span><span class="s2">.</span><span class="s1">exists</span><span class="s2">()){</span>
+                <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Error opening/reading &quot; </span><span class="s2">+ </span><span class="s1">args</span><span class="s2">[</span><span class="s1">argIndex</span><span class="s2">] + </span><span class="s4">&quot;.csv&quot;</span><span class="s2">);</span>
+                <span class="s1">doNext </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+                <span class="s0">continue</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s0">if </span><span class="s2">((</span><span class="s1">myForest </span><span class="s2">= </span><span class="s1">Forest</span><span class="s2">.</span><span class="s1">readForestFromCSV</span><span class="s2">(</span><span class="s1">args</span><span class="s2">[</span><span class="s1">argIndex</span><span class="s2">])) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">doNext </span><span class="s2">= </span><span class="s1">menu</span><span class="s2">(</span><span class="s1">myForest</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+<span class="s3">//----Farewell message</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">();</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Exiting the Forestry Simulation&quot;</span><span class="s2">);</span>
+
+    <span class="s2">} </span><span class="s3">// end of main method</span>
+
+    <span class="s0">public static boolean </span><span class="s1">menu</span><span class="s2">(</span><span class="s1">Forest myForest</span><span class="s2">) {</span>
+
+        <span class="s1">Scanner keyboard </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s0">char </span><span class="s1">option</span><span class="s2">;</span>
+        <span class="s0">while </span><span class="s2">(</span><span class="s0">true</span><span class="s2">) {</span>
+
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;(P)rint, (A)dd, (C)ut, (G)row, (R)eap, (S)ave, (L)oad, (N)ext, e(X)it : &quot;</span><span class="s2">);</span>
+            <span class="s1">option </span><span class="s2">= </span><span class="s1">keyboard</span><span class="s2">.</span><span class="s1">next</span><span class="s2">().</span><span class="s1">charAt</span><span class="s2">(</span><span class="s5">0</span><span class="s2">);</span>
+
+            <span class="s0">switch </span><span class="s2">(</span><span class="s1">Character</span><span class="s2">.</span><span class="s1">toUpperCase</span><span class="s2">(</span><span class="s1">option</span><span class="s2">)) {</span>
+
+                <span class="s0">case </span><span class="s4">'P'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">printTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'A'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">addTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'C'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">cutTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'G'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">growTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'R'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">reapTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'S'</span><span class="s2">: </span><span class="s1">myForest</span><span class="s2">.</span><span class="s1">saveTrees</span><span class="s2">(); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'L'</span><span class="s2">: </span><span class="s1">loadTrees</span><span class="s2">(</span><span class="s1">myForest</span><span class="s2">); </span><span class="s0">break</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'N'</span><span class="s2">: </span><span class="s0">return true</span><span class="s2">;</span>
+
+                <span class="s0">case </span><span class="s4">'X'</span><span class="s2">:</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Exiting program. Have a great performance!&quot;</span><span class="s2">);</span>
+                    <span class="s0">return true</span><span class="s2">;</span>
+                <span class="s0">default</span><span class="s2">:</span>
+                    <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Invalid menu option, try again&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+    <span class="s0">public static void </span><span class="s1">loadTrees</span><span class="s2">(</span><span class="s1">Forest myForest</span><span class="s2">) {</span>
+        <span class="s1">Scanner keyboard </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scanner</span><span class="s2">(</span><span class="s1">System</span><span class="s2">.</span><span class="s1">in</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s4">&quot;Enter forest name: &quot;</span><span class="s2">);</span>
+        <span class="s1">String fileName </span><span class="s2">= </span><span class="s1">keyboard</span><span class="s2">.</span><span class="s1">next</span><span class="s2">();</span>
+        <span class="s1">myForest </span><span class="s2">= </span><span class="s1">Forest</span><span class="s2">.</span><span class="s1">readForestFromCSV</span><span class="s2">(</span><span class="s1">fileName </span><span class="s2">+ </span><span class="s4">&quot;.db&quot;</span><span class="s2">);</span>
+
+    <span class="s2">}</span>
+
+<span class="s2">}</span></pre>
+</body>
+</html>
